@@ -37,6 +37,8 @@ const CompanyRegister = () => {
                     placeholder="Location"
                     icon={FaLocationDot}
                   />
+
+                  <IconInput inputType="file" />
                 </Form>
               </Col>
               <Col></Col>
