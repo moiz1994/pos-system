@@ -1,9 +1,9 @@
-import CompanyRegister from "./pages/CompanyRegister";
+import FormContainer from "./pages/FormContainer";
 
 const App = () => {
   return (
     <div className="App">
-      <CompanyRegister />
+      <FormContainer />
     </div>
   );
 };
