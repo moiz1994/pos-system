@@ -10,15 +10,39 @@ import axios from "axios";
 const CompanyRegister = () => {
   const [inputs, setInputs] = useState({});
 
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
+  // const handleChange = (e) => {
+  //   const name = e.target.name;
+  //   const value = e.target.value;
+  //   setInputs((values) => ({ ...values, [name]: value }));
+  // };
+
+  const handleChange = (name, value) => {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.post("http://localhost:80/pos-system/company/save", inputs);
+    const formData = new FormData();
+    formData.append("name", inputs.name);
+    formData.append("phone", inputs.phone);
+    formData.append("email", inputs.email);
+    formData.append("location", inputs.location);
+    formData.append("logo", inputs.logo);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:80/pos-system/company/save",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
   return (
@@ -30,7 +54,8 @@ const CompanyRegister = () => {
           placeholder="Enter Company name"
           icon={FaHome}
           label="Company Name"
-          onChange={handleChange}
+          //onChange={handleChange}
+          onChange={(value) => handleChange("name", value)}
           name="name"
         />
 
@@ -39,7 +64,8 @@ const CompanyRegister = () => {
           placeholder="Enter Mobile No"
           icon={FaPhoneAlt}
           label="Mobile No"
-          onChange={handleChange}
+          // onChange={handleChange}
+          onChange={(value) => handleChange("phone", value)}
           name="phone"
         />
 
@@ -48,7 +74,8 @@ const CompanyRegister = () => {
           placeholder="Enter Email Address"
           icon={MdEmail}
           label="Email Address"
-          onChange={handleChange}
+          // onChange={handleChange}
+          onChange={(value) => handleChange("email", value)}
           name="email"
         />
 
@@ -57,7 +84,8 @@ const CompanyRegister = () => {
           placeholder="Enter Location"
           icon={FaLocationDot}
           label="Location"
-          onChange={handleChange}
+          // onChange={handleChange}
+          onChange={(value) => handleChange("location", value)}
           name="location"
         />
 
@@ -65,7 +93,8 @@ const CompanyRegister = () => {
           inputType="file"
           icon={ImAttachment}
           label="Choose Company Logo"
-          onChange={handleChange}
+          // onChange={handleChange}
+          onChange={(value) => handleChange("logo", value)}
           name="logo"
         />
 
